@@ -8,9 +8,9 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     {{form|crispy}}
-                    <input class="btn btn-warning" type="submit" value="SignUp">
+                    <input class="btn btn-warning" type="submit" value="Sign up">
                 </form>
-                <h5>Already Have an account? <a class="btn btn-primary" href="#" role="button">Login</a></h5>
+                <h5>Already Have an account? <a class="btn btn-warning" href=" {% url 'App_Login:login' %} " role="button">Login</a></h5>
             </div>
         </div>
     </div>
