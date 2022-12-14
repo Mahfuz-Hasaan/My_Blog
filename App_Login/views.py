@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import SignupForm
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from .forms import SignupForm,UserUpdateForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,UserChangeForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.http import  HttpResponseRedirect
@@ -13,7 +13,7 @@ def SignUp(request):
             form.save()
             # messages.success(request,'SignUp successfully done')
             messages.success(request, 'Account Created Successfully!')
-            return HttpResponseRedirect(reverse('App_Blog:blog_list'))
+            return HttpResponseRedirect(reverse('App_Login:login'))
     else:
         form = SignupForm()
     dict = {'form':form}
@@ -29,7 +29,7 @@ def user_login(request):
             if user is not None:
                 login(request,user)
                 messages.success(request,'Logged in succcessfully!')
-                return HttpResponseRedirect(reverse('App_Blog:blog_list'))
+                return HttpResponseRedirect(reverse('App_Login:user_profile'))
     else:
         form = AuthenticationForm()
     dict = {'form':form}
@@ -39,3 +39,20 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('App_Blog:blog_list'))
+
+@login_required
+def user_profile(request):
+    dict = {}
+    return render(request,'App_Login/profile.html',context=dict)
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account Updated Successfully!')
+            return HttpResponseRedirect(reverse('App_Login:user_profile'))
+    else:
+        form = UserUpdateForm(instance=request.user)
+    dict = {'form':form}
+    return render(request,'App_Login/update_profile.html',context=dict)
