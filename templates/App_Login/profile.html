@@ -24,7 +24,7 @@
                 User Name : {{user.username}} <br>
                 Full Name : {{user.first_name}} {{user.last_name}} <br>
                 Email : {{user.email}} <hr>
-                <a class="btn btn-primary" href=" {% url 'App_Login:update_profile' %} " role="button">Update Profile</a>
+                <a class="btn btn-primary" href=" {% url 'App_Login:update_profile' %} " role="button">Update Profile</a> <a class="btn btn-primary" href=" {% url 'App_Login:change_passowrd' %} " role="button">Change Password</a>
             </div>
             <div class="col-sm-10">
                 <form action="" method="POST">
