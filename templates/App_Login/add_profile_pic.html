@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} profile piture update {% endblock title %}
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-sm-6 offset-3">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <button class="btn btn-warning mt-1" type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+

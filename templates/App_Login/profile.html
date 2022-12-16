@@ -16,15 +16,28 @@
             </div>
         </div>
     {% endfor %}
-
-    <div class="container mt-5">
+    
+    <div class="container mt-5 offset-2">
         <div class="row">
             <div class="col-sm-10">
-                <strong>{{user.username|upper}}</strong>   your profile <hr>
+                <strong>{{user.username|upper}}</strong>&ensp; your profile <hr>
+                {% if user.user_profile %}
+                    <div class="container mt-3">           
+                        <img src="/media/{{user.user_profile.profile_pic}}" class="img-thumbnail"  width="200px" height="100px"> 
+                    </div>
+                    <a class="btn btn-info m-2" href=" {% url 'App_Login:change_profile_pic' %} " role="button">change profile picture</a>
+                {% else %}
+                    <div class="container mt-3">           
+                        <img src="/media/profile_pics/avatar.png" class="img-thumbnail" alt="Cinque Terre" width="204" height="136"> <br>
+                        <a class="btn btn-info mt-1" href=" {% url 'App_Login:add_profile_pic' %} " role="button">change profile picture</a>
+                    </div>
+                {% endif %}
+                <hr>
                 User Name : {{user.username}} <br>
                 Full Name : {{user.first_name}} {{user.last_name}} <br>
                 Email : {{user.email}} <hr>
                 <a class="btn btn-primary" href=" {% url 'App_Login:update_profile' %} " role="button">Update Profile</a> <a class="btn btn-primary" href=" {% url 'App_Login:change_passowrd' %} " role="button">Change Password</a>
+
             </div>
             <div class="col-sm-10">
                 <form action="" method="POST">

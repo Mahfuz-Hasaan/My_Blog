@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import SignupForm,UserUpdateForm
+from .forms import SignupForm,UserUpdateForm,Profile_pics
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,UserChangeForm,PasswordChangeForm
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.contrib import messages
@@ -70,3 +70,31 @@ def pass_change(request):
         form = PasswordChangeForm(user=request.user)
     dict = {'form':form}
     return render(request,'App_Login/password.html',context=dict)
+
+@login_required
+def add_profile_pic(request):
+    if request.method == 'POST':
+        form = Profile_pics(request.POST,request.FILES)
+        if form.is_valid():
+            user_object = form.save(commit=False)
+            user_object.user = request.user
+            user_object.save()
+            messages.success(request,'profile picture successfully changed!')
+            return HttpResponseRedirect(reverse('App_Login:user_profile'))
+    else:
+        form = Profile_pics()
+    dict = {'form':form}
+    return render(request,'App_Login/add_profile_pic.html',context=dict)
+        
+@login_required
+def change_pro_pic(request):
+    if request.method == 'POST':
+        form = Profile_pics(request.POST,request.FILES,instance=request.user.user_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'profile picture successfully changed!')
+            return HttpResponseRedirect(reverse('App_Login:user_profile'))
+    else:
+        form = Profile_pics()
+    dict = {'form':form}
+    return render(request,'App_Login/add_profile_pic.html',context=dict)
