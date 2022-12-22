@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}create blog{% endblock title %}
+{% block body %}
+<h2 class='mt-2 ms-2'>Write your blog here</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input class="btn btn-warning mt-2" type="submit" value="Publish">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
